@@ -211,14 +211,14 @@ export default function EvaluateStudent({ params }) {
       <NavBar role={session?.user?.role || 'student'} />
 
       <div className="relative container mx-auto px-6 py-16 z-10">
-        <Card className="max-w-3xl mx-auto bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden">
+        <Card className="max-w-3xl mx-auto bg-white bg-opacity-80 backdrop-filter backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden">
           <CardHeader className="text-center">
-            <CardTitle className="text-4xl font-extrabold text-white mb-2">
+            <CardTitle className="text-4xl font-extrabold text-black mb-2">
               Evaluate Team Member
             </CardTitle>
             <CardDescription className="text-xl text-gray-200">
               Provide your evaluation for{' '}
-              <span className="text-yellow-300">{student}</span> in the following
+              <span className="text-purple-500">{student}</span> in the following
               areas
             </CardDescription>
           </CardHeader>
@@ -228,7 +228,7 @@ export default function EvaluateStudent({ params }) {
               <div className="mb-10">
                 <label
                   htmlFor="conceptual"
-                  className="block text-2xl font-semibold text-white mb-4"
+                  className="block text-2xl font-semibold text-purple mb-4"
                 >
                   Conceptual Contribution
                 </label>
@@ -245,7 +245,7 @@ export default function EvaluateStudent({ params }) {
                   value={commentConceptual}
                   onChange={(e) => setCommentConceptual(e.target.value)}
                   disabled={isDisabled}
-                  className="mt-4 bg-white bg-opacity-10 text-white placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
+                  className="mt-4 bg-white bg-opacity-10 text-black placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
                 />
                 {errors.ratingConceptual && (
                   <Alert variant="destructive" className="mt-2">
@@ -261,7 +261,7 @@ export default function EvaluateStudent({ params }) {
               <div className="mb-10">
                 <label
                   htmlFor="practical"
-                  className="block text-2xl font-semibold text-white mb-4"
+                  className="block text-2xl font-semibold text-black mb-4"
                 >
                   Practical Contribution
                 </label>
@@ -278,7 +278,7 @@ export default function EvaluateStudent({ params }) {
                   value={commentPractical}
                   onChange={(e) => setCommentPractical(e.target.value)}
                   disabled={isDisabled}
-                  className="mt-4 bg-white bg-opacity-10 text-white placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
+                  className="mt-4 bg-white bg-opacity-10 text-black placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
                 />
                 {errors.ratingPractical && (
                   <Alert variant="destructive" className="mt-2">
@@ -294,7 +294,7 @@ export default function EvaluateStudent({ params }) {
               <div className="mb-10">
                 <label
                   htmlFor="workEthic"
-                  className="block text-2xl font-semibold text-white mb-4"
+                  className="block text-2xl font-semibold text-black mb-4"
                 >
                   Work Ethic
                 </label>
@@ -311,7 +311,7 @@ export default function EvaluateStudent({ params }) {
                   value={commentWorkEthic}
                   onChange={(e) => setCommentWorkEthic(e.target.value)}
                   disabled={isDisabled}
-                  className="mt-4 bg-white bg-opacity-10 text-white placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
+                  className="mt-4 bg-white bg-opacity-10 text-black placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
                 />
                 {errors.ratingWorkEthic && (
                   <Alert variant="destructive" className="mt-2">
@@ -327,7 +327,7 @@ export default function EvaluateStudent({ params }) {
               <div className="mb-10">
                 <label
                   htmlFor="cooperation"
-                  className="block text-2xl font-semibold text-white mb-4"
+                  className="block text-2xl font-semibold text-black mb-4"
                 >
                   Cooperation
                 </label>
@@ -344,7 +344,7 @@ export default function EvaluateStudent({ params }) {
                   value={commentCooperation}
                   onChange={(e) => setCommentCooperation(e.target.value)}
                   disabled={isDisabled}
-                  className="mt-4 bg-white bg-opacity-10 text-white placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
+                  className="mt-4 bg-white bg-opacity-10 text-black placeholder-gray-300 focus:bg-opacity-20 transition duration-300"
                 />
                 {errors.ratingCooperation && (
                   <Alert variant="destructive" className="mt-2">
