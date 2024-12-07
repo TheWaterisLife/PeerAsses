@@ -1,26 +1,26 @@
 'use client';
 
-import { useRef, useState } from 'react'
-import { Sphere, MeshDistortMaterial, Float, Stars } from '@react-three/drei'
-import { useFrame,Canvas } from '@react-three/fiber'
+import { useRef, useState } from 'react';
+import { Sphere, MeshDistortMaterial, Float, Stars } from '@react-three/drei';
+import { useFrame, Canvas } from '@react-three/fiber';
 
 function AnimatedSphere() {
-  const meshRef = useRef()
-  const [hovered, setHovered] = useState(false)
+  const meshRef = useRef();
+  const [hovered, setHovered] = useState(false);
 
   useFrame((state) => {
-    const t = state.clock.getElapsedTime()
+    const t = state.clock.getElapsedTime();
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.cos(t / 8) / 4
-      meshRef.current.rotation.y = Math.sin(t / 8) / 4
-      meshRef.current.rotation.z = Math.sin(t / 3) / 4
-      meshRef.current.position.x = Math.sin(t / 4) / 3
-      meshRef.current.position.y = Math.cos(t / 4) / 3
+      meshRef.current.rotation.x = Math.cos(t / 8) / 4; // Slower rotation
+      meshRef.current.rotation.y = Math.sin(t / 8) / 4;
+      meshRef.current.rotation.z = Math.sin(t / 3) / 4;
+      meshRef.current.position.x = Math.sin(t / 4) / 3; // Slower position change
+      meshRef.current.position.y = Math.cos(t / 4) / 3;
     }
-  })
+  });
 
   return (
-    <Float speed={15} rotationIntensity={6} floatIntensity={15}>
+    <Float speed={5} rotationIntensity={2} floatIntensity={5}> {/* Slower float speed */}
       <Sphere
         ref={meshRef}
         args={[1, 100, 200]}
@@ -30,13 +30,13 @@ function AnimatedSphere() {
       >
         <MeshDistortMaterial
           color={hovered ? '#FF6B6B' : '#4834d4'}
-          distort={0.5}
-          speed={0.5}
-          roughness={4}
+          distort={0.5} // Reduced distortion for smoother effect
+          speed={2} // Slower material animation
+          roughness={0.7}
         />
       </Sphere>
     </Float>
-  )
+  );
 }
 
 export default function AnimatedBackground() {
@@ -45,20 +45,20 @@ export default function AnimatedBackground() {
       <Canvas camera={{ position: [0, 0, 5] }}>
         <ambientLight />
         <group position={[10, 10, 10]}>
-        <pointLight />
+          <pointLight />
         </group>
         <AnimatedSphere />
         <Stars
           radius={30}
           depth={15}
-          count={5000}
-          factor={6}
+          count={5000} // Fewer stars for smoother rendering
+          factor={5} // Adjusted star density
           saturation={0}
           fade
-          speed={3}
+          speed={2} // Slower star movement
         />
       </Canvas>
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-purple-500/30 to-pink-500/30" />
     </div>
-  )
+  );
 }
