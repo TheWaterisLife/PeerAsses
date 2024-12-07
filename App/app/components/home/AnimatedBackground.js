@@ -31,7 +31,7 @@ function AnimatedSphere() {
         <MeshDistortMaterial
           color={hovered ? '#FF6B6B' : '#4834d4'}
           distort={0.5}
-          speed={1}
+          speed={0.5}
           roughness={4}
         />
       </Sphere>
