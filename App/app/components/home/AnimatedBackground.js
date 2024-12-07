@@ -11,11 +11,11 @@ function AnimatedSphere() {
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.cos(t / 8) / 2
-      meshRef.current.rotation.y = Math.sin(t / 8) / 2
-      meshRef.current.rotation.z = Math.sin(t / 3) / 2
-      meshRef.current.position.x = Math.sin(t / 4) / 2
-      meshRef.current.position.y = Math.cos(t / 4) / 2
+      meshRef.current.rotation.x = Math.cos(t / 8) / 4
+      meshRef.current.rotation.y = Math.sin(t / 8) / 4
+      meshRef.current.rotation.z = Math.sin(t / 3) / 4
+      meshRef.current.position.x = Math.sin(t / 4) / 3
+      meshRef.current.position.y = Math.cos(t / 4) / 3
     }
   })
 
