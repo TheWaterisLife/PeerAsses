@@ -1,0 +1,188 @@
+// page.js
+
+'use client'
+
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { parse, addMinutes } from 'date-fns'
+import { toast, Toaster } from 'sonner'
+
+import AnimatedBackground from '@/app/components/home/AnimatedBackground'
+import Navbar from '@/app/components/home/Navbar'
+import CalendarComponent from '@/app/components/OfficeHours/CalendarComponent'
+import CreateOfficeHoursDialog from '@/app/components/OfficeHours/CreateOfficeHoursDialog'
+import ReserveOfficeHourDialog from '@/app/components/OfficeHours/ReserveOfficeHourDialog'
+import OfficeHoursList from '@/app/components/OfficeHours/OfficeHoursList'
+import Footer from '@/app/components/home/Footer'
+
+export default function OfficeHoursCalendar() {
+  const { data: session, status } = useSession()
+
+  const [officeHours, setOfficeHours] = useState([])
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [isCreating, setIsCreating] = useState(false)
+  const [isReserving, setIsReserving] = useState(false)
+  const [selectedSlot, setSelectedSlot] = useState(null)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetchOfficeHours()
+    }
+  }, [status])
+
+  const fetchOfficeHours = async () => {
+    try {
+      const response = await fetch('/api/office_index')
+      if (!response.ok) throw new Error('Failed to fetch office hours')
+      const data = await response.json()
+      const updatedData = data.map((item) => ({
+        ...item,
+        start: new Date(item.start),
+        end: new Date(item.end),
+      }))
+      setOfficeHours(updatedData)
+    } catch (error) {
+      toast.error('Failed to fetch office hours')
+    }
+  }
+
+  const handleCreateOfficeHours = async (startTime, endTime, interval) => {
+    if (!selectedDate) return
+    setIsCreating(true)
+    const slots = generateTimeSlots(
+      selectedDate,
+      startTime,
+      endTime,
+      parseInt(interval)
+    )
+    try {
+      const response = await fetch('/api/office_index', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slots, username: session?.user?.username }),
+      })
+      if (!response.ok) throw new Error('Failed to create office hours')
+      toast.success('Office hours created successfully')
+      fetchOfficeHours()
+    } catch (error) {
+      toast.error('Failed to create office hours')
+    } finally {
+      setIsCreating(false)
+    }
+  }
+
+  const generateTimeSlots = (date, start, end, intervalMinutes) => {
+    const slots = []
+    let currentTime = parse(start, 'HH:mm', date)
+    const endTime = parse(end, 'HH:mm', date)
+
+    while (currentTime < endTime) {
+      const startSlot = new Date(currentTime)
+      const endSlot = addMinutes(startSlot, intervalMinutes)
+      slots.push({
+        id: `${startSlot.toISOString()}-${endSlot.toISOString()}`,
+        start: startSlot,
+        end: endSlot,
+        reserved: false,
+        reservedBy: null,
+      })
+      currentTime = endSlot
+    }
+
+    return slots
+  }
+
+  const handleReservation = async (slot, studentName) => {
+    if (!slot || !studentName) return
+    setIsReserving(true)
+    try {
+      const response = await fetch('/api/office_index_update', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: slot.id,
+          reserved: true,
+          reservedBy: studentName,
+        }),
+      })
+      if (!response.ok) throw new Error('Failed to update office hour')
+      toast.success('Office hour reserved successfully')
+      fetchOfficeHours()
+      setSelectedSlot(null)
+    } catch (error) {
+      toast.error('Failed to update the office hour')
+    } finally {
+      setIsReserving(false)
+    }
+  }
+
+  const handleDeleteOfficeHour = async (id) => {
+    try {
+      const response = await fetch('/api/office_index_delete', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      })
+      if (!response.ok) throw new Error('Failed to delete office hour')
+      toast.success('Office hour deleted successfully')
+      fetchOfficeHours()
+    } catch (error) {
+      toast.error('Failed to delete the office hour')
+    }
+  }
+
+  const filteredOfficeHours = officeHours.filter(
+    (slot) =>
+      slot.start.toDateString() === selectedDate.toDateString()
+  )
+
+  if (status === 'unauthenticated') {
+    return (
+      <p className="text-red-500 text-center mt-8">You are not signed in.</p>
+    )
+  }
+
+  return (
+    <div className="min-h-screen text-gray-800 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col">
+      <AnimatedBackground />
+      <Navbar role={session?.user?.role} />
+      <main className="pt-24 relative z-10 flex-grow flex flex-col">
+        <section className="flex-grow py-10">
+          <div className="container mx-auto flex flex-col md:flex-row justify-center items-start space-y-6 md:space-y-0 md:space-x-6">
+            <CalendarComponent
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              officeHours={officeHours}
+              openCreateDialog={() => setIsCreateDialogOpen(true)}
+            />
+            <OfficeHoursList
+              selectedDate={selectedDate}
+              officeHours={officeHours}
+              handleDeleteOfficeHour={handleDeleteOfficeHour}
+              setSelectedSlot={setSelectedSlot}
+              filteredOfficeHours={filteredOfficeHours}
+            />
+          </div>
+        </section>
+      </main>
+
+      <CreateOfficeHoursDialog
+        isOpen={isCreateDialogOpen}
+        setIsOpen={setIsCreateDialogOpen}
+        handleCreateOfficeHours={handleCreateOfficeHours}
+        isCreating={isCreating}
+      />
+
+      <ReserveOfficeHourDialog
+        selectedSlot={selectedSlot}
+        setSelectedSlot={setSelectedSlot}
+        handleReservation={handleReservation}
+        isReserving={isReserving}
+      />
+
+      <Footer />
+      <Toaster />
+    </div>
+  )
+}
