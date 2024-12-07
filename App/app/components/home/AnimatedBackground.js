@@ -11,11 +11,11 @@ function AnimatedSphere() {
   useFrame((state) => {
     const t = state.clock.getElapsedTime()
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.cos(t / 4) / 2
-      meshRef.current.rotation.y = Math.sin(t / 4) / 2
-      meshRef.current.rotation.z = Math.sin(t / 1.5) / 2
-      meshRef.current.position.x = Math.sin(t / 1) / 2
-      meshRef.current.position.y = Math.cos(t / 1) / 2
+      meshRef.current.rotation.x = Math.cos(t / 8) / 2
+      meshRef.current.rotation.y = Math.sin(t / 8) / 2
+      meshRef.current.rotation.z = Math.sin(t / 3) / 2
+      meshRef.current.position.x = Math.sin(t / 4) / 2
+      meshRef.current.position.y = Math.cos(t / 4) / 2
     }
   })
 
@@ -30,8 +30,8 @@ function AnimatedSphere() {
       >
         <MeshDistortMaterial
           color={hovered ? '#FF6B6B' : '#4834d4'}
-          distort={0.9}
-          speed={8}
+          distort={0.5}
+          speed={1}
           roughness={4}
         />
       </Sphere>
@@ -51,11 +51,11 @@ export default function AnimatedBackground() {
         <Stars
           radius={30}
           depth={15}
-          count={10000}
+          count={5000}
           factor={6}
           saturation={0}
           fade
-          speed={10}
+          speed={3}
         />
       </Canvas>
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-purple-500/30 to-pink-500/30" />
