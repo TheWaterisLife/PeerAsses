@@ -20,7 +20,7 @@ function AnimatedSphere() {
   });
 
   return (
-    <Float speed={5} rotationIntensity={2} floatIntensity={5}> {/* Slower float speed */}
+    <Float speed={7} rotationIntensity={4} floatIntensity={6}> {/* Slower float speed */}
       <Sphere
         ref={meshRef}
         args={[1, 100, 200]}
@@ -31,7 +31,7 @@ function AnimatedSphere() {
         <MeshDistortMaterial
           color={hovered ? '#FF6B6B' : '#4834d4'}
           distort={0.5} // Reduced distortion for smoother effect
-          speed={2} // Slower material animation
+          speed={4} // Slower material animation
           roughness={0.7}
         />
       </Sphere>
