@@ -216,7 +216,7 @@ export default function EvaluateStudent({ params }) {
             <CardTitle className="text-4xl font-extrabold text-black mb-2">
               Evaluate Team Member
             </CardTitle>
-            <CardDescription className="text-xl text-gray-200">
+            <CardDescription className="text-xl text-black-200">
               Provide your evaluation for{' '}
               <span className="text-purple-500">{student}</span> in the following
               areas
