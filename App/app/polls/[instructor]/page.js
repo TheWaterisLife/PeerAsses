@@ -170,7 +170,7 @@ export default function PollsPage({ params }) {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mx-auto"
         >
-          <Card className="bg-white/30 backdrop-blur-lg border-none shadow-lg mb-8">
+          <Card className="bg-white/90 backdrop-blur-lg border-none shadow-lg mb-8">
             <CardHeader>
               <CardTitle className="flex items-center justify-center space-x-2 text-4xl">
                 <PieChart className="h-8 w-8 text-blue-500" />
@@ -198,7 +198,7 @@ export default function PollsPage({ params }) {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <Card className="bg-white/20 backdrop-blur-lg border-none shadow-lg mb-6">
+                    <Card className="bg-white/90 backdrop-blur-lg border-none shadow-lg mb-6">
                       <CardHeader>
                         <CardTitle>{poll.question}</CardTitle>
                         {totalVotes > 0 && (
@@ -304,7 +304,7 @@ export default function PollsPage({ params }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card className="bg-white/10 backdrop-blur-lg border-none shadow-lg">
+                <Card className="bg-white/90 backdrop-blur-lg border-none shadow-lg">
                   <CardContent className="flex flex-col items-center justify-center py-12">
                     <AlertCircle className="h-12 w-12 text-blue-500 mb-4" />
                     <p className="text-lg text-gray-600 text-center">
