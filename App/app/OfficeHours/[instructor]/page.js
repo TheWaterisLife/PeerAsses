@@ -113,13 +113,13 @@ const ViewOfficeHours = ({ params }) => {
   };
 
   return (
-    <div className="min-h-screen text-gray-800 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 bg-white/30">
+    <div className="min-h-screen text-gray-800 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50 bg-white/39">
       <AnimatedBackground />
       <NavBar role={session?.user?.role} />
       <main className="pt-24 relative z-10">
         <section className="py-10">
           <div className="container mx-auto">
-            <div className="flex flex-col md:flex-row bg-white/30">
+            <div className="flex flex-col md:flex-row bg-white/90">
               <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
