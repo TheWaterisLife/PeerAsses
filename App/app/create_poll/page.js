@@ -140,7 +140,7 @@ export default function CreatePollPage() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-2xl"
         >
-          <Card className="bg-white/30 backdrop-blur-lg border-none shadow-lg">
+          <Card className="bg-white/90 backdrop-blur-lg border-none shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center justify-center space-x-2 text-4xl">
                 <PieChart className="h-8 w-8 text-blue-500" />
